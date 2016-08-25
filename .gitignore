@@ -8,17 +8,20 @@ out
 
 build
 
-*.class# Eclipse project files #
+*.class
+# Eclipse project files #
 
 .classpath
 
 .project
 
-.settings# Gradle #
+.settings
+# Gradle #
 
 target
 
-gradlew*# Package Files #
+gradlew*
+# Package Files #
 
 *.jar
 
