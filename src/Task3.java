@@ -9,19 +9,16 @@
  */
 public class Task3 {
     public static void tgFunction(double[] nums, int h){
-        int resultLength = nums.length/h;
-        if(nums.length%h!=0) resultLength=resultLength+1;
-        double[] result=new double[resultLength];
-        for(int i=0, k=0; i<nums.length; i=i+h, k++){
+        System.out.println("x        F(x)");
+        for(int i=0; i<nums.length; i=i+h){
             double x = Math.tan(2*nums[i])-3;
-            result[k]=x;
-            System.out.println(nums[i]+"     "+result[k]);
+            System.out.println(nums[i]+"     "+x);
         }
     }
 
     public static void main(String[] args) {
         double[] arr = {1.0, 5.7, 11.0, 0.0, -6.0, -87.8};
-        tgFunction(arr,5);
+        tgFunction(arr,2);
 
     }
 }
