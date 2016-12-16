@@ -7,7 +7,7 @@ import java.util.Comparator;
 /**
  * Created by Оксана on 16.12.2016.
  */
-public class App {
+public class Lambda {
     public static void main(String[] args) {
         ArrayList<String> list = new ArrayList<>();
         list.add("Int");
@@ -21,6 +21,7 @@ public class App {
         persons.add(new Person(24, "Jack"));
         persons.add(new Person(11, "Samuel"));
         persons.add(new Person(19, "Ann"));
+        persons.add(new Person(30, "Alice"));
         Collections.sort(persons, Comparator.comparing(Person::getName));
         persons.forEach(System.out::println);
 
