@@ -28,3 +28,4 @@ gradlew*
 *.war
 
 *.ear
+/.idea/

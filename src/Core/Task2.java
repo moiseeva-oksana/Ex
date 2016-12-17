@@ -1,3 +1,5 @@
+package Core;
+
 /**
  * Created by Оксана on 26.08.2016.
  */

@@ -1,18 +1,20 @@
+package Core;
+
 /**
  * Created by Оксана on 25.08.2016.
  */
 public class NullExample {
 
     public static void someMethod(A a){
-        System.out.println("A");
+        System.out.println("Core.A");
     }
 
     public static void someMethod(B b){
-        System.out.println("B");
+        System.out.println("Core.B");
     }
 
     public static void someMethod(C c){
-        System.out.println("C");
+        System.out.println("Core.C");
     }
 
     public static void main(String[] args) {
