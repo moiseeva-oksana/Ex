@@ -53,8 +53,31 @@ public class Fraction {
         return this;
     }
 
+    @Override
+    public boolean equals(Object o) {
+        if (this == o) return true;
+        if (o == null || getClass() != o.getClass()) return false;
+
+        Fraction fraction = (Fraction) o;
+        Fraction thisReduced = this.reduce();
+        Fraction oReduced = fraction.reduce();
+
+        if (thisReduced.p != oReduced.p) return false;
+        return thisReduced.q == oReduced.q;
+
+    }
+
+    @Override
+    public int hashCode() {
+        int result = p;
+        result = 31 * result + q;
+        return result;
+    }
+
     public static void main(String[] args) {
-       System.out.println(new Fraction(9,29).divide(new Fraction(13,3)));
-       System.out.println(new Fraction("9/29").divide(new Fraction("13hk/3yhh")));
+       //System.out.println(new Fraction(9,29).divide(new Fraction(13,3)));
+       //System.out.println(new Fraction("9/29").divide(new Fraction("13hk/3yhh")));
+
+        System.out.println(new Fraction("9/15").equals(new Fraction("6/10")));
     }
 }
