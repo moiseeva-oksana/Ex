@@ -9,10 +9,10 @@ import static org.junit.Assert.*;
 
 
 public class QueueThroughStacksTest {
-    QueueThroughStacks<String> queue = new QueueThroughStacks<>();
+    private QueueThroughStacks<String> queue = new QueueThroughStacks<>();
     @Before
     public void init() {
-        for(int i=0; i<10; i++) {
+        for(int i=0; i<5; i++) {
             queue.push("element " + i);
         }
     }
@@ -23,6 +23,16 @@ public class QueueThroughStacksTest {
         assertThat(queue.pop(), is("element 1"));
         assertThat(queue.pop(), is("element 2"));
         assertThat(queue.pop(), is("element 3"));
+        queue.push("Hello");
+        assertThat(queue.pop(), is("element 4"));
+        assertThat(queue.pop(), is("Hello"));
+        queue.push("Hi");
+        queue.push("Hola");
+        assertThat(queue.pop(), is("Hi"));
+        queue.push("Salut");
+        assertThat(queue.pop(), is("Hola"));
+        assertThat(queue.pop(), is("Salut"));
+
     }
 
 }

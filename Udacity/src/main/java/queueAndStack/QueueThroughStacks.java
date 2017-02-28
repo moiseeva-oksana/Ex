@@ -12,11 +12,12 @@ public class QueueThroughStacks<T> {
     }
 
     public T pop() {
-        int size = firstStack.size();
-        for(int i=0; i<size; i++) {
-            secondStack.addLast(firstStack.removeLast());
+        if (secondStack.isEmpty()) {
+            int size = firstStack.size();
+            for (int i = 0; i < size; i++) {
+                secondStack.addLast(firstStack.removeLast());
+            }
         }
         return secondStack.removeLast();
     }
-
 }
