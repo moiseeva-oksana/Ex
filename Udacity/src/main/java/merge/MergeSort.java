@@ -4,6 +4,9 @@ import java.util.ArrayList;
 import java.util.Arrays;
 import java.util.List;
 
+/**
+ * Work in progress
+ */
 public class MergeSort {
     private List<int[]> listOfArrays = new ArrayList<>();
     private List<int[]> sortedList = new ArrayList<>();
