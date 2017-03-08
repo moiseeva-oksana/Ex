@@ -8,19 +8,7 @@ import java.util.List;
  * Work in progress
  */
 public class MergeSort {
-    private List<int[]> listOfArrays = new ArrayList<>();
-    private List<int[]> sortedList = new ArrayList<>();
-
-    private void spliceToArrays(int[] arr) {
-        if(arr.length<2) {
-            listOfArrays.add(arr);
-            return;
-        }
-        spliceToArrays(Arrays.copyOfRange(arr, 0, arr.length/2));
-        spliceToArrays(Arrays.copyOfRange(arr, arr.length/2, arr.length));
-
-    }
-    private int[]sort(int[] list) {
+    private int[] sort(int[] list) {
         if (list.length <= 1) {
             return list;
         }
@@ -33,16 +21,18 @@ public class MergeSort {
         sort(first);
         sort(second);
 
-        return merge(first, second);
+        list =merge(first, second);
+        return list;
 
     }
+
     private int[] merge(int[] first, int[] second) {
         int[] result = new int[first.length + second.length];
         int iFirst = 0;
         int iSecond = 0;
         int iMerged = 0;
-        while (iMerged<result.length-1) {
-            if (first[iFirst]<(second[iSecond])) {
+        while (iFirst < first.length && iSecond < second.length) {
+            if (first[iFirst] < (second[iSecond])) {
                 result[iMerged] = first[iFirst];
                 iFirst++;
             } else {
@@ -58,10 +48,13 @@ public class MergeSort {
 
     public static void main(String[] args) {
         MergeSort mergeSort = new MergeSort();
-        System.out.println("_________________");
-        int[] merge = mergeSort.sort(new int[]{1, 5,9,-7,7,8,4,6});
-        for (int i: merge) {
+        int[] merge = mergeSort.merge(new int[]{1, 2, 4, 10,}, new int[]{-8, 0, 3, 7, 9, 12});
+        for (int i : merge) {
             System.out.println(i);
         }
+
+        int[] sort = mergeSort.sort(new int[]{5,4,6,1,0,7});
+        System.out.println("_________________");
+        System.out.println(Arrays.toString(sort));
     }
 }
