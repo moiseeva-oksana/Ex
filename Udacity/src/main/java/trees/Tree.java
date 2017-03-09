@@ -6,6 +6,7 @@ import java.util.Queue;
 
 public class Tree<T> {
     private Node<T> root;
+    private int count;
 
     public Tree(Node<T> root) {
         this.root = root;
@@ -54,6 +55,13 @@ public class Tree<T> {
 
     private void visit(Node<T> node) {
         System.out.println(node.entity);
+        count++;
+    }
+
+    private int size() {
+        count=0;
+        traversePreOrder(root);
+        return count;
     }
 
 
@@ -98,7 +106,7 @@ public class Tree<T> {
         System.out.println("Breadth _______________");
         tree.traverseBreadthFirst(tree.root);
 
-
+        System.out.println(tree.size());
 
     }
 }
