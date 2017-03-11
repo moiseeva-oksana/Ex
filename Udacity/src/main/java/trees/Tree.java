@@ -1,112 +1,193 @@
 package trees;
 
+/**
+ * Binary Search Tree
+ */
+
 import java.util.LinkedList;
-import java.util.List;
 import java.util.Queue;
 
-public class Tree<T> {
-    private Node<T> root;
-    private int count;
+public class Tree {
+    private Node root;
+    private int size;
 
-    public Tree(Node<T> root) {
-        this.root = root;
+    public Node getRoot() {
+        return root;
     }
 
-    private void traverseBreadthFirst(Node<T> node) {
-        Queue<Node<T>> queue = new LinkedList<>();
-        queue.add(node);
+    public int getSize() {
+        return size;
+    }
+
+    public void traverseBreadthFirst() {
+        Queue<Node> queue = new LinkedList<>();
+        queue.add(root);
         while (!queue.isEmpty()) {
-            Node<T> n = queue.remove();
+            Node n = queue.remove();
             visit(n);
-            for (Node<T> child : n.children) {
-                if (child != null)
-                    queue.add(child);
-            }
+            if (n.left != null)
+                queue.add(n.left);
+            if (n.right != null)
+                queue.add(n.right);
+
         }
     }
 
-    private void traversePreOrder(Node<T> node) {
+    public void traversePreOrder(Node node) {
         visit(node);
-        for (Node<T> child : node.children) {
-            traversePreOrder(child);
-        }
+        if (node.left != null)
+            traversePreOrder(node.left);
+        if (node.right != null)
+            traversePreOrder(node.right);
+
     }
-    private void traversePostOrder(Node<T> node) {
-        for (Node<T> child : node.children) {
-            traversePostOrder(child);
-        }
+
+    public void traversePostOrder(Node node) {
+        if (node.left != null)
+            traversePostOrder(node.left);
+        if (node.right != null)
+            traversePostOrder(node.right);
         visit(node);
     }
 
 
-    private void traverseInOrder(Node<T> node) {
-        if (node.children.isEmpty()) {
-            visit(node);
-            return;
-        }
-        traverseInOrder(node.children.get(0));
+    public void traverseInOrder(Node node) {
+        if (node.left != null)
+            traverseInOrder(node.left);
         visit(node);
-        if (node.children.size() > 1) {
-            for(int i=1;i<node.children.size();i++) {
-                traverseInOrder(node.children.get(i));
-            }
-        }
+        if (node.right != null)
+            traverseInOrder(node.right);
+
     }
 
-    private void visit(Node<T> node) {
+    private void visit(Node node) {
         System.out.println(node.entity);
-        count++;
-    }
-
-    private int size() {
-        count=0;
-        traversePreOrder(root);
-        return count;
     }
 
 
+    public boolean add(int element) {
+        boolean result;
+        if (root == null) {
+            root = new Node(element);
+            result = true;
+        } else {
+            result = root.addChild(element);
+        }
+        if (result) {
+            size++;
+        }
+        return result;
+    }
 
+    public Node find(int element) {
+        return root.findElement(element);
+    }
 
-    private static class Node<T> {
-        private T entity;
-        private Node<T> parent;
-        private List<Node<T>> children = new LinkedList<>();
-        private int size;
+    public int rank(Node node) {
+        return node.rank();
+    }
 
-        public Node(T entity) {
+    public int depth(Node node) {
+        int result = 0;
+        if (node == root) {
+            return result;
+        }
+        Node parent = node.parent;
+        while (parent != null) {
+            parent = parent.parent;
+            result++;
+        }
+        return result;
+    }
+
+    public int height(Node node) {
+        return node.height();
+    }
+
+    static class Node {
+        private int entity;
+        private Node left;
+        private Node right;
+        private Node parent;
+
+        public int getEntity() {
+            return entity;
+        }
+
+        public Node getParent() {
+            return parent;
+        }
+
+        private Node(int entity) {
             this.entity = entity;
         }
-        private void addChild(T element) {
-            size++;
-            Node<T> node = new Node<>(element);
-            node.parent = this;
-            children.add(node);
+
+
+        private boolean addChild(int element) {
+            if (element == entity)
+                return false;
+            if (element < entity) {
+                if (left == null) {
+                    left = new Node(element);
+                    left.parent = this;
+                    return true;
+                } else
+                    return left.addChild(element);
+            }
+            if (element > entity) {
+                if (right == null) {
+                    right = new Node(element);
+                    right.parent = this;
+                    return true;
+                } else
+                    return right.addChild(element);
+            }
+            return false;
         }
-    }
 
-    public static void main(String[] args) {
-        Node<String> root = new Node<>("Root");
-        root.addChild("One");
-        root.addChild("Two");
-        root.children.get(0).addChild("Three");
-        root.children.get(0).addChild("Four");
-        root.children.get(1).addChild("Five");
-//         root.children.get(1).addChild("Six");
+        private Node findElement(int element) {
+            if (element == entity)
+                return this;
+            if (element < entity) {
+                if (left == null) {
+                    return null;
+                } else
+                    return left.findElement(element);
+            }
+            if (element > entity) {
+                if (right == null) {
+                    return null;
+                } else
+                    return right.findElement(element);
+            }
+            return null;
+        }
 
-        Tree<String> tree = new Tree<>(root);
-        System.out.println("Pre _______________");
-        tree.traversePreOrder(tree.root);
+        private int rank() {
+            int count = 0;
+            if (left != null) {
+                count++;
+            }
+            if (right != null) {
+                count++;
+            }
+            return count + ((left != null) ? left.rank() : 0) + ((right != null) ? right.rank() : 0);
+        }
 
-        System.out.println("Post _______________");
-        tree.traversePostOrder(tree.root);
+        private int height() {
+            if (left == null && right == null) {
+                return 0;
+            }
 
-        System.out.println("In _______________");
-        tree.traverseInOrder(tree.root);
+            int lefty = ((left != null) ? left.height() : 0);
+            int righty = ((right != null) ? right.height() : 0);
 
-        System.out.println("Breadth _______________");
-        tree.traverseBreadthFirst(tree.root);
+            if (lefty > righty) {
+                return lefty + 1;
+            } else {
+                return righty + 1;
+            }
 
-        System.out.println(tree.size());
-
+        }
     }
 }
